@@ -1,0 +1,104 @@
+<!-- app.component.html -->
+<div class="container">
+
+  <div class="row">
+    <div class="col-8">
+      <div class="container mt-5">
+        <h2>Formulario de Registro</h2>
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="nombre" class="form-label">Nombre </label>
+              <input formControlName="nombre" type="text" class="form-control" [class.is-valid]="nombreControl?.valid"
+                [class.is-invalid]="
+              nombreControl?.touched && nombreControl?.invalid
+            " />
+              <div *ngIf="nombreControl?.hasError('required')" class="invalid-feedback">
+                Este campo es requerido
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="apellido" class="form-label">Apellido</label>
+              <input formControlName="apellido" type="text" class="form-control"
+                [class.is-valid]="apellidoControl?.valid" [class.is-invalid]="
+          apellidoControl?.touched && apellidoControl?.invalid
+        " />
+              <div *ngIf="apellidoControl?.hasError('required')" class="invalid-feedback">
+                Este campo es requerido
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" formControlName="email" placeholder="Ingrese su email"
+                [class.is-valid]="emailControl?.valid" [class.is-invalid]="
+          emailControl?.touched && emailControl?.invalid
+        ">
+              <div *ngIf="emailControl?.hasError('required')" class="invalid-feedback">
+                Este campo es requerido
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="fecha-nacimiento" class="form-label">Fecha de Nacimiento</label>
+              <input type="date" class="form-control" formControlName="fecha" required>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="dni" class="form-label">DNI</label>
+              <input type="text" class="form-control" formControlName="dni" placeholder="Ingrese su DNI"
+              [class.is-valid]="userForm.get('dni')?.valid" [class.is-invalid]="userForm.get('dni')?.touched && userForm.get('dni')?.invalid">
+       <div *ngIf="userForm.get('dni')?.hasError('required')" class="invalid-feedback">
+         Este campo es requerido
+       </div>
+       <div *ngIf="userForm.get('dni')?.hasError('notANumber')" class="invalid-feedback">
+         El valor debe ser un número
+       </div>
+       <div *ngIf="userForm.get('dni')?.hasError('invalidLength')" class="invalid-feedback">
+         El número de DNI debe tener entre 7 y 8 dígitos
+       </div>
+
+            </div>
+            <div class="col-md-6">
+              <label for="pais" class="form-label">País</label>
+              <select class="form-select" formControlName="pais" required>
+                <option value="" selected disabled>Seleccione su país</option>
+                <option value="Argentina">Argentina</option>
+                <option value="Uruguay">Uruguay</option>
+                <option value="Brasil">Brasil</option>
+
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="curso" class="form-label">Curso Elegido</label>
+              <select class="form-select" formControlName="curso" required>
+                <option value="" selected disabled>Seleccione un curso</option>
+                <option value="Programación Web">Programación Web</option>
+                <option value="Desarrollo de Aplicaciones Móviles">Desarrollo de Aplicaciones Móviles</option>
+                <option value="Introducción a la Inteligencia Artificial">Introducción a la Inteligencia Artificial
+                </option>
+
+              </select>
+            </div>
+
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <pre [ngClass]="{ 'text-success': userForm.status === 'VALID', 'text-danger': userForm.status !== 'VALID' }">
+        Estado : {{ userForm.status }}
+      </pre>
+      <pre>{{ userForm.value | json }}</pre>
+    </div>
+    
+
+
+
+  </div>
+</div>
